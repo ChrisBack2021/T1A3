@@ -1,10 +1,12 @@
-require "tty-prompt"
+require 'tty-prompt'
+require 'text-table'
+require 'tty-table'
 
 
 
 prompt = TTY::Prompt.new
 
-puts "Welcome to the fitness guru app, where we track your dreams for you"
+puts 'Welcome to the fitness guru app, where we track your dreams for you'
 
 
 # navigation = [
@@ -16,18 +18,34 @@ puts "Welcome to the fitness guru app, where we track your dreams for you"
 # First parameter is the message of the prompt. Second parameter is the list of options, which is the navigation array
 # user_selection = prompt.select("Please choose an option from the list", navigation)
 module Food
-    attr_reader :food_tracker, :calorie_tracker
 
     def self.food_tracker
-        print "What food did you eat?"
+        puts 'What food did you eat?'
         foods = gets.chomp
+        puts "How many calories was in the #{foods}?"
+        calories = gets.chomp.to_i
+
+        return foods, calories
     end
 
-    def self.calorie_tracker
-        print "How many calories was in the food?"
-        calories = gets.chomp
-    end
 end
+
+food_and_cal_storage = [["Food", "Calories"]]
+
+
+food_and_cal_storage.push(Food.food_tracker)
+food_cal_pairing = food_and_cal_storage.to_h
+
+puts food_cal_pairing.to_table(:first_row_is_head => true)
+
+
+
+
+
+
+
+
+
 
 
 

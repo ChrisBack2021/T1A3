@@ -7,3 +7,7 @@ source "https://rubygems.org"
 gem "tty-prompt", "~> 0.23.1"
 
 gem "rspec", "~> 3.11"
+
+gem "tty-table", "~> 0.12.0"
+
+gem "text-table", "~> 1.2"
