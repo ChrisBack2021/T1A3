@@ -16,7 +16,6 @@ prompt = TTY::Prompt.new
 
 puts 'Welcome to the fitness guru app, where we track your dreams for you'
 
-
 navigation = [
     "1. Track your food intake and calorie intake",
     "2. Input your workouts and get a randomized list of workouts YOU choose.",
@@ -26,18 +25,17 @@ navigation = [
 # First parameter is the message of the prompt. Second parameter is the list of options, which is the navigation array
 user_selection = prompt.select("Please choose an option from the list", navigation)
 
-
-
+# nested loops inside function.
 def tracker
     food_cal_pairing = Food.food_tracker
-
-    table = TTY::Table.new(["Food","Calories"], [food_cal_pairing])
+    # Ruby gems
+    table = TTY::Table.new(["Food", "Calories"], [food_cal_pairing])
     puts table.render(:ascii)
-
+    # CRUD
     user_continue = true
     while user_continue == true
         puts 'If you would like to add something, please type "add".'
-        puts 'If there is something you would like to remove, please type "remove".'
+        puts 'If you would like to restart the table, please type "remove".'
         puts 'If you wish to export the table to a csv, please type "csv".'
         puts 'If there is nothing to change, please type "exit".'
         user_edits = gets.chomp.strip.downcase
@@ -46,7 +44,11 @@ def tracker
             table << Food.food_tracker
             puts table.render(:ascii)
         when 'remove'
-            puts 'remove testing'
+            table_clear = table.drop(table.length)
+            table_clear = TTY::Table.new(["Food", "Calories"], [])
+            # puts table_clear.render(:ascii)
+            table = table_clear
+        # File handling
         when 'csv'
             CSV.open('food_tracker.csv', 'a') do |csv|
                 csv << [table]
@@ -55,15 +57,15 @@ def tracker
         when 'exit'
             user_continue = false
         else
-            puts "Invalid choice. Please select from remove, add or next."
+            puts "Invalid choice. Please select from remove, add, csv or next."
         end
     end
 end
 
 
-# def workout
-#     puts "this is placesetter for the workout choice"
-# end
+def workout
+    puts "this is placesetter for the workout choice"
+end
 
 case user_selection
 when "1. Track your food intake and calorie intake"
