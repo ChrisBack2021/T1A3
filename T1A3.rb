@@ -32,6 +32,8 @@ def menu
         trackers
     when "2. Input your workouts and get a randomized list of workouts YOU choose."
         workout
+    when "3. Exit this program"
+        return
     end
 end
 
@@ -84,24 +86,24 @@ def trackers
     end
 end
 
-
+# CRUD for exercise
 def workout
+    exercise_list = []
+
     user_continue = true
     while user_continue == true
     puts 'add 7 exercises'
     puts 'delete'
     puts 'randomise'
-    puts 'if you do not wish to create exercises, randomise from our own'
     puts 'if dont like randomise, choose your own from your inputs'
     puts 'textfile'
     puts 'exit'
 
-    exercise_list = []
     exercise_input = gets.chomp.strip.downcase
     case exercise_input
     when 'add'
         while (exercise_list.length < 7)
-            users_choice = gets.chomp.strip.downcase
+            users_choice = gets.chomp.strip.downcase.to_s
                 if exercise_list.include?(users_choice) == false
                     exercise_list << users_choice
                 else
@@ -114,35 +116,22 @@ def workout
         # if exercise_input = 'add' && (exercise_list.length == 7)
         #     puts "The list is now full. You cannot add more"
         # end
+    when 'delete'
+        puts "Please input which exercise you wish to delete"
+        if exercise_list.length == 0
+            puts "There is nothing to delete!"
+        elsif exercise_list.length >= 1
+            delete_array = gets.chomp.strip.downcase
+            exercise_list.delete(delete_array)
+        end
+        p exercise_list
+    when 'randomise'
+        puts "It has now been randomised"
+    when 'exit'
+        user_continue = false
+        menu
     end
     end
-
-
 end
-
-
-
-
-
-# workout
-# output message
-# create an array to store workouts
-# randomize workouts
-# output it back to user
-# if user doesnt like, then re randomize
-# if user doesn't like let him choose out of the array
-# end
-
-
-
-
-
-
-
-
-
-
-
-
 
 menu

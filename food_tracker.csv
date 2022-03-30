@@ -1,2 +1,4 @@
 Food , Calories
-Chicken,500
+
+chicken,5
+"[""chicken"", ""5""]","[""beef"", ""2""]"
