@@ -1,4 +1,4 @@
-require './newfile'
+require './T1A3'
 
 
 describe Food do
@@ -10,8 +10,8 @@ describe Food do
     end
 end
 
-# describe '#tracker' do
-#     it 'should have the Food module inputs in the food_cal_pairing array' do
-#         expect(food_cal_pairing).to eq(Food.food_tracker)
-#     end
-# end
+describe '#trackers' do
+    it 'should have an empty array called food_cal_pairing' do
+        expect(food_cal_pairing).to eq[]
+    end
+end
