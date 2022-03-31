@@ -58,7 +58,7 @@ def trackers
         case user_edits
         # Create/read/update
         when 'add'
-            food_cal_pairing << Food.food_tracker 
+            food_cal_pairing << Food.food_tracker
             tables(food_cal_pairing)
         # read/delete
         when 'remove'
@@ -88,6 +88,8 @@ end
 
 # CRUD for exercise
 def workout
+    prompt = TTY::Prompt.new
+
     exercise_list = []
 
     user_continue = true
@@ -106,11 +108,11 @@ def workout
         end
         while exercise_list.length < 7
             users_choice = gets.chomp.strip.downcase.to_s
-                if exercise_list.include?(users_choice) == false
-                    exercise_list << users_choice
-                else
-                    puts "That has already been added."
-                end
+            if exercise_list.include?(users_choice) == false
+                exercise_list << users_choice
+            else
+                puts "That has already been added."
+            end
         end
         puts "You have now added 7 exercises."
         puts "Please choose another option"
@@ -124,7 +126,13 @@ def workout
             exercise_list.delete(delete_array)
         end
         p exercise_list
-    when 'randomise'
+    when 'random'
+        exercise_list.shuffle!
+        p exercise_list
+        until prompt.yes?("Are you happy with the new order?") == true
+            exercise_list.shuffle!
+            p exercise_list
+        end
         puts "It has now been randomised"
     when 'exit'
         user_continue = false
