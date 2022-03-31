@@ -50,36 +50,56 @@ def tables(input_values)
     puts Rainbow(table.render(:ascii)).silver
 end
 
+
+def food_tracker_menu
+    puts Rainbow('If you would like to add something, please type "add".').green
+    puts Rainbow('To remove the last item, please type "remove".').magenta
+    puts Rainbow('If you wish to export the table to a csv, please type "csv".').yellow
+    puts Rainbow('If there is nothing to change, please type "exit".').red
+end
+
+def add_food(food_cal_pairing)
+    food_cal_pairing << Food.food_tracker
+    tables(food_cal_pairing)
+end
+
+def remove_food(food_cal_pairing)
+    food_cal_pairing.delete_at(food_cal_pairing.length - 1)
+    tables(food_cal_pairing)
+    puts "Nothing left to delete" if food_cal_pairing.length.zero?
+end
+
+def csv(food_cal_pairing)
+    CSV.open('food_tracker.csv', 'a') do |csv|
+        food_cal_pairing.each do |row|
+        csv << row
+        end
+    end
+    puts 'The file has been exported to food_tracker.csv'
+end
+
+
+
+
 # CRUD for food/calorie.
 def trackers
     food_cal_pairing = []
 
     user_continue = true
     while user_continue == true
-        puts Rainbow('If you would like to add something, please type "add".').green
-        puts Rainbow('To remove the last item, please type "remove".').magenta
-        puts Rainbow('If you wish to export the table to a csv, please type "csv".').yellow
-        puts Rainbow('If there is nothing to change, please type "exit".').red
+        food_tracker_menu
         # Error handling via input
         user_edits = gets.chomp.strip.downcase
         case user_edits
         # Create/read/update
         when 'add'
-            food_cal_pairing << Food.food_tracker
-            tables(food_cal_pairing)
+            add_food(food_cal_pairing)
         # read/delete
         when 'remove'
-            food_cal_pairing.delete_at(food_cal_pairing.length - 1)
-            tables(food_cal_pairing)
-            puts "Nothing left to delete" if food_cal_pairing.length.zero?
+            remove_food(food_cal_pairing)
         # File handling
         when 'csv'
-            CSV.open('food_tracker.csv', 'a') do |csv|
-            food_cal_pairing.each do |row|
-                csv << row
-            end
-            end
-            puts 'The file has been exported to food_tracker.csv'
+            csv(food_cal_pairing)
         # exit loop, return back to menu
         when 'exit'
             user_continue = false
