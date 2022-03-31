@@ -13,10 +13,8 @@ module Navigation
     end
 
     # Menu navigation
-
-
     def self.nav_list
-        navigation = [
+        [
           "1. Track your food intake and calorie intake",
           "2. Input your workouts and you can randomize the list of workouts YOU choose.",
           "3. Exit this program"
@@ -50,7 +48,7 @@ module Food
     def self.food_tracker
         puts Rainbow('What food did you eat?').green
         foods = gets.chomp.strip
-       puts Rainbow("How many calories was in the #{foods}?").green
+        puts Rainbow("How many calories was in the #{foods}?").green
         calories = gets.chomp.strip
         return foods, calories
     end
@@ -75,8 +73,8 @@ module Food
     end
 
     def self.add_total(food_cal_pairing)
-        total_cal = food_cal_pairing.flatten.select.with_index{|_,i| (i+1) % 2 == 0}
-        total_cal.map!{|cal|cal.to_i}
+        total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1) % 2.zero? }
+        total_cal.map! { |cal |cal.to_i }
         p total_cal.sum
     end
 
