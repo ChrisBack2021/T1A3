@@ -13,33 +13,38 @@ module Navigation
     end
 
     # Menu navigation
-end
 
-    def nav_menu
-        food_cal_pairing = []
-        exercise_list = []
-        active = true
-        while active
-        p exercise_list
-        prompt = TTY::Prompt.new
+
+    def self.nav_list
         navigation = [
           "1. Track your food intake and calorie intake",
-          "2. Input your workouts and get a randomized list of workouts YOU choose.",
+          "2. Input your workouts and you can randomize the list of workouts YOU choose.",
           "3. Exit this program"
         ]
+    end
 
-        user_selection = prompt.select(Rainbow("Please choose an option from the list").aqua, navigation)
+    def self.nav_menu
+        food_cal_pairing = []
+        exercise_list = []
+
+        active = true
+        while active
+
+        prompt = TTY::Prompt.new
+
+        user_selection = prompt.select(Rainbow("Please choose an option from the list").aqua, nav_list)
 
         case user_selection
         when "1. Track your food intake and calorie intake"
             trackers(food_cal_pairing)
-        when "2. Input your workouts and get a randomized list of workouts YOU choose."
+        when "2. Input your workouts and you can randomize the list of workouts YOU choose."
             workouts(exercise_list)
         when "3. Exit this program"
             active = false
         end
         end
     end
+end
 
 module Food
     def self.food_tracker
@@ -201,4 +206,4 @@ def workouts(exercise_list)
     end
 end
 
-nav_menu
+Navigation.nav_menu
