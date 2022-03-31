@@ -81,7 +81,7 @@ def trackers
             menu
         # Error handling
         else
-            puts Rainbow("Invalid choice. Please select from add, remove, csv or next.").cyan
+            puts Rainbow("Invalid choice. Please select from add, remove, csv or exit.").cyan
         end
     end
 end
@@ -114,8 +114,8 @@ def workout
                 puts "That has already been added."
             end
         end
-        puts "You have now added 7 exercises."
-        puts "Please choose another option"
+        puts Rainbow("You have now added 7 exercises.").green
+        puts Rainbow("Please choose another option").green
         p exercise_list
     when 'delete'
         puts "Please input which exercise you wish to delete"
@@ -123,20 +123,26 @@ def workout
             puts "There is nothing to delete!"
         elsif exercise_list.length >= 1
             delete_array = gets.chomp.strip.downcase
-            exercise_list.delete(delete_array)
+            puts Rainbow("#{exercise_list.delete(delete_array)} has now been deleted. Below is the remaining:").magenta
+            puts exercise_list
         end
-        p exercise_list
     when 'random'
         exercise_list.shuffle!
         p exercise_list
         until prompt.yes?("Are you happy with the new order?") == true
             exercise_list.shuffle!
-            p exercise_list
+            print exercise_list
         end
-        puts "It has now been randomised"
+        puts "It has now been randomised. You will be redirected back to the exercise menu."
+    when 'text'
+        file = File.open('exercise_list.txt', 'a')
+        file.puts exercise_list
+        file.close
     when 'exit'
         user_continue = false
         menu
+    else
+        puts Rainbow("Invalid choice. Please select from add, delete, random, text or exit.").cyan
     end
     end
 end
