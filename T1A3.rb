@@ -8,7 +8,7 @@ require 'csv'
 module Navigation
     def self.opening_message
         font = TTY::Font.new(:doom)
-        puts font.write("FITNESS   GURU")
+        puts font.write("FITNESS    GURU")
         puts Rainbow('Welcome to the fitness guru app, where we track your dreams for you').aqua
     end
 
@@ -62,8 +62,11 @@ module Food
     end
 
     def self.add_food(food_cal_pairing)
+        prompt = TTY::Prompt.new
+        while prompt.yes?("Would you like to add another entry?") == true
         food_cal_pairing << Food.food_tracker
         tables(food_cal_pairing)
+        end
     end
 
     def self.remove_food(food_cal_pairing)
@@ -121,7 +124,10 @@ module Exercise
                 puts 'Please input which you wish to delete.'
                 p exercise_list
                 delete_array = gets.chomp.strip.downcase
-                puts Rainbow("#{exercise_list.delete(delete_array)} has now been deleted. Below is the remaining:").magenta
+                puts Rainbow("#{exercise_list.delete(delete_array)} has now been deleted.").magenta
+                if exercise_list.length >= 1
+                    puts Rainbow("Below is the remaining").magenta
+                end
                 puts exercise_list
                 puts "There is nothing to delete!" if exercise_list.length.zero? == true && return
             end
