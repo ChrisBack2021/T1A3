@@ -50,7 +50,7 @@ module Food
     def self.food_tracker
         puts Rainbow('What food did you eat?').green
         foods = gets.chomp.strip
-        puts Rainbow("How many calories was in the #{foods}?").green
+       puts Rainbow("How many calories was in the #{foods}?").green
         calories = gets.chomp.strip
         return foods, calories
     end
@@ -58,6 +58,7 @@ module Food
     def self.food_tracker_menu
         puts Rainbow('If you would like to add something, please type "add".').green
         puts Rainbow('To remove the last input, please type "remove".').magenta
+        puts Rainbow('To calculate the total calories, please type "add total".').pink
         puts Rainbow('If you wish to export the table to a csv, please type "csv".').yellow
         puts Rainbow('If there is nothing to change, please type "exit".').red
     end
@@ -73,6 +74,12 @@ module Food
         puts "Nothing left to delete" if food_cal_pairing.length.zero?
     end
 
+    def self.add_total(food_cal_pairing)
+        total_cal = food_cal_pairing.flatten.select.with_index{|_,i| (i+1) % 2 == 0}
+        total_cal.map!{|cal|cal.to_i}
+        p total_cal.sum
+    end
+
     def self.csv(food_cal_pairing)
         CSV.open('food_tracker.csv', 'a') do |csv|
             food_cal_pairing.each do |row|
@@ -86,7 +93,7 @@ end
 module Exercise
     # Exercise menu
     def self.exercise_menu
-        puts Rainbow('To add exercises, please type "add". Please note only a maximum of 7 can be present at any time.').green
+        puts Rainbow('To add exercises, please type "add". Please note 7 exercises must be enterred.').green
         puts Rainbow('To delete an exercise, please type "delete".').magenta
         puts Rainbow('To change the order of the exercises, please type "random".').aliceblue
         puts Rainbow('To push it out to a text file, please type "text".').yellow
@@ -118,7 +125,7 @@ module Exercise
                 delete_array = gets.chomp.strip.downcase
                 puts Rainbow("#{exercise_list.delete(delete_array)} has now been deleted. Below is the remaining:").magenta
                 puts exercise_list
-                puts "There is nothing to delete!" if exercise_list.length.zero? == true
+                puts "There is nothing to delete!" if exercise_list.length.zero? == true && return
             end
         else
             exercise_list.length.zero?
@@ -170,6 +177,8 @@ def trackers(food_cal_pairing)
         # read/delete
         when 'remove'
             Food.remove_food(food_cal_pairing)
+        when 'add total'
+            Food.add_total(food_cal_pairing)
         # File handling
         when 'csv'
             Food.csv(food_cal_pairing)
