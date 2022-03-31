@@ -39,7 +39,7 @@ end
 
     # Ruby gems for table
 def tables(input_values)
-    table = TTY::Table.new(["Food", "Calories"], (input_values))
+    table = TTY::Table.new(%w[Food Calories], input_values)
     puts Rainbow(table.render(:ascii)).silver
 end
 
@@ -64,7 +64,7 @@ def trackers
         when 'remove'
             food_cal_pairing.delete_at(food_cal_pairing.length - 1)
             tables(food_cal_pairing)
-            if food_cal_pairing.length == 0
+            if food_cal_pairing.length.zero?
                 puts "Nothing left to delete"
             end
         # File handling
@@ -92,17 +92,19 @@ def workout
 
     user_continue = true
     while user_continue == true
-    puts 'add 7 exercises'
-    puts 'delete'
-    puts 'randomise'
-    puts 'if dont like randomise, choose your own from your inputs'
-    puts 'textfile'
-    puts 'exit'
+    puts Rainbow('To add exercises, please type "add". Please note only a maximum of 7 can be present at any time.').green
+    puts Rainbow('To delete an exercise, please type "delete".').magenta
+    puts Rainbow('To change the order of the exercises, please type "random".').aliceblue
+    puts Rainbow('To push it out to a text file, please type "text".').yellow
+    puts Rainbow('To exit, please type "exit".').red
 
     exercise_input = gets.chomp.strip.downcase
     case exercise_input
     when 'add'
-        while (exercise_list.length < 7)
+        if exercise_input = 'add' && (exercise_list.length == 7)
+            puts Rainbow("The list is now full. You cannot add more").purple
+        end
+        while exercise_list.length < 7
             users_choice = gets.chomp.strip.downcase.to_s
                 if exercise_list.include?(users_choice) == false
                     exercise_list << users_choice
@@ -110,15 +112,12 @@ def workout
                     puts "That has already been added."
                 end
         end
-        p exercise_list
         puts "You have now added 7 exercises."
         puts "Please choose another option"
-        # if exercise_input = 'add' && (exercise_list.length == 7)
-        #     puts "The list is now full. You cannot add more"
-        # end
+        p exercise_list
     when 'delete'
         puts "Please input which exercise you wish to delete"
-        if exercise_list.length == 0
+        if exercise_list.length.zero?
             puts "There is nothing to delete!"
         elsif exercise_list.length >= 1
             delete_array = gets.chomp.strip.downcase
