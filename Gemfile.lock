@@ -4,6 +4,7 @@ GEM
     diff-lcs (1.5.0)
     pastel (0.8.0)
       tty-color (~> 0.5)
+    rainbow (3.1.1)
     rspec (3.11.0)
       rspec-core (~> 3.11.0)
       rspec-expectations (~> 3.11.0)
@@ -25,6 +26,7 @@ GEM
     text-table (1.2.4)
     tty-color (0.6.0)
     tty-cursor (0.7.1)
+    tty-font (0.5.0)
     tty-prompt (0.23.1)
       pastel (~> 0.8)
       tty-reader (~> 0.8)
@@ -45,8 +47,10 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  rainbow (~> 3.1)
   rspec (~> 3.11)
   text-table (~> 1.2)
+  tty-font (~> 0.5.0)
   tty-prompt (~> 0.23.1)
   tty-table (~> 0.12.0)
 

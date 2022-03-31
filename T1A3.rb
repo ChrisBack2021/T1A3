@@ -1,6 +1,7 @@
 require 'tty-prompt'
 require 'tty-table'
 require 'rainbow'
+require 'tty-font'
 
 require 'csv'
 
@@ -14,18 +15,24 @@ module Food
     end
 end
 
-puts 'Welcome to the fitness guru app, where we track your dreams for you'
+def opening_message
+    font = TTY::Font.new(:doom)
+    puts font.write("FITNESS   GURU")
+    puts Rainbow('Welcome to the fitness guru app, where we track your dreams for you').aqua
+end
+
+opening_message
 
 # Menu navigation
-def menu
+def nav_menu
     prompt = TTY::Prompt.new
     navigation = [
-        "1. Track your food intake and calorie intake",
-        "2. Input your workouts and get a randomized list of workouts YOU choose.",
-        "3. Exit this program"
+      "1. Track your food intake and calorie intake",
+      "2. Input your workouts and get a randomized list of workouts YOU choose.",
+      "3. Exit this program"
     ]
 
-    user_selection = prompt.select("Please choose an option from the list", navigation)
+    user_selection = prompt.select(Rainbow("Please choose an option from the list").aqua, navigation)
 
     case user_selection
     when "1. Track your food intake and calorie intake"
@@ -37,7 +44,7 @@ def menu
     end
 end
 
-    # Ruby gems for table
+# Ruby gems for table
 def tables(input_values)
     table = TTY::Table.new(%w[Food Calories], input_values)
     puts Rainbow(table.render(:ascii)).silver
@@ -64,21 +71,19 @@ def trackers
         when 'remove'
             food_cal_pairing.delete_at(food_cal_pairing.length - 1)
             tables(food_cal_pairing)
-            if food_cal_pairing.length.zero?
-                puts "Nothing left to delete"
-            end
+            puts "Nothing left to delete" if food_cal_pairing.length.zero?
         # File handling
         when 'csv'
             CSV.open('food_tracker.csv', 'a') do |csv|
             food_cal_pairing.each do |row|
                 csv << row
-                end
+            end
             end
             puts 'The file has been exported to food_tracker.csv'
         # exit loop, return back to menu
         when 'exit'
             user_continue = false
-            menu
+            nav_menu
         # Error handling
         else
             puts Rainbow("Invalid choice. Please select from add, remove, csv or exit.").cyan
@@ -86,65 +91,91 @@ def trackers
     end
 end
 
-# CRUD for exercise
-def workout
-    prompt = TTY::Prompt.new
+# Exercise tracker add function
+def add(exercise_list)
+  puts Rainbow("The list is now full. You cannot add more").purple if exercise_list.length == 7
+  while exercise_list.length < 7
+      users_choice = gets.chomp.strip.downcase.to_s
+      if exercise_list.include?(users_choice)
+          puts "That has already been added."
+      else
+          exercise_list << users_choice
+      end
+  end
+  puts Rainbow("You have now added 7 exercises.\nPlease choose another option").green
+  p exercise_list
+end
 
-    exercise_list = []
-
-    user_continue = true
-    while user_continue == true
+# Exercise menu
+def exercise_menu
     puts Rainbow('To add exercises, please type "add". Please note only a maximum of 7 can be present at any time.').green
     puts Rainbow('To delete an exercise, please type "delete".').magenta
     puts Rainbow('To change the order of the exercises, please type "random".').aliceblue
     puts Rainbow('To push it out to a text file, please type "text".').yellow
     puts Rainbow('To exit, please type "exit".').red
+end
 
-    exercise_input = gets.chomp.strip.downcase
-    case exercise_input
-    when 'add'
-        if exercise_input = 'add' && (exercise_list.length == 7)
-            puts Rainbow("The list is now full. You cannot add more").purple
-        end
-        while exercise_list.length < 7
-            users_choice = gets.chomp.strip.downcase.to_s
-            if exercise_list.include?(users_choice) == false
-                exercise_list << users_choice
-            else
-                puts "That has already been added."
-            end
-        end
-        puts Rainbow("You have now added 7 exercises.").green
-        puts Rainbow("Please choose another option").green
-        p exercise_list
-    when 'delete'
-        puts "Please input which exercise you wish to delete"
-        if exercise_list.length.zero?
-            puts "There is nothing to delete!"
-        elsif exercise_list.length >= 1
+# Exercise tracker
+def delete(exercise_list)
+    prompt = TTY::Prompt.new
+    if exercise_list.length >= 1
+        until prompt.yes?("Are you sure you want to remove from the list?") == false
+            puts 'Please input which you wish to delete.'
+            p exercise_list
             delete_array = gets.chomp.strip.downcase
             puts Rainbow("#{exercise_list.delete(delete_array)} has now been deleted. Below is the remaining:").magenta
             puts exercise_list
+            puts "There is nothing to delete!" if exercise_list.length.zero? == true
         end
-    when 'random'
-        exercise_list.shuffle!
-        p exercise_list
-        until prompt.yes?("Are you happy with the new order?") == true
-            exercise_list.shuffle!
-            print exercise_list
-        end
-        puts "It has now been randomised. You will be redirected back to the exercise menu."
-    when 'text'
-        file = File.open('exercise_list.txt', 'a')
-        file.puts exercise_list
-        file.close
-    when 'exit'
-        user_continue = false
-        menu
     else
-        puts Rainbow("Invalid choice. Please select from add, delete, random, text or exit.").cyan
-    end
+        exercise_list.length.zero?
+        puts "There is nothing to delete!"
+        return
     end
 end
 
-menu
+# Randomizer for exercise
+def random(exercise_list)
+    prompt = TTY::Prompt.new
+    exercise_list.shuffle!
+    p exercise_list
+    until prompt.yes?("Are you happy with the new order?") == true
+        exercise_list.shuffle!
+        print exercise_list
+    end
+    puts "It has now been randomised. You will be redirected back to the exercise menu."
+end
+
+# File handling
+def text(exercise_list)
+    file = File.open('exercise_list.txt', 'a')
+    file.puts exercise_list
+    file.close
+end
+
+def workout
+    exercise_list = []
+
+    user_continue = true
+    while user_continue == true
+        exercise_menu
+        exercise_input = gets.chomp.strip.downcase
+        case exercise_input
+        when 'add'
+            add(exercise_list)
+        when 'delete'
+            delete(exercise_list)
+        when 'random'
+            random(exercise_list)
+        when 'text'
+            text(exercise_list)
+        when 'exit'
+            user_continue = false
+            nav_menu
+        else
+            puts Rainbow("Invalid choice. Please select from add, delete, random, text or exit.").cyan
+        end
+    end
+end
+
+nav_menu

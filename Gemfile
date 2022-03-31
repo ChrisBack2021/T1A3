@@ -10,4 +10,6 @@ gem "rspec", "~> 3.11"
 
 gem "tty-table", "~> 0.12.0"
 
-gem "text-table", "~> 1.2"
+gem "tty-font", "~> 0.5.0"
+
+gem "rainbow", "~> 3.1"
