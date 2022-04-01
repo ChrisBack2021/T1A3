@@ -29,13 +29,7 @@ module Navigation
         active = true
         while active
 
-        # system("clear")
-
         prompt = TTY::Prompt.new
-
-        system("clear")
-
-        opening_message
 
         user_selection = prompt.select(Rainbow("Please choose an option from the list").aqua, nav_list)
 
@@ -86,7 +80,7 @@ module Food
     end
 
     def self.add_total(food_cal_pairing)
-        total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1).even? }
+        total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1) % 2 == 0 }
         total_cal.map! { |cal| cal.to_i }
         p total_cal.sum
     end
@@ -113,7 +107,7 @@ module Exercise
 
     def self.character_validator
         TTY::Prompt.new.ask('Which exercise would you like to add?') do |q|
-            q.validate(/(\A\D+\w)\z/, Rainbow('Invalid character detected. Please insert minimum 2 characters and only a-z.').red)
+            q.validate(/\A\D+\w\z/, Rainbow('Invalid character detected. Please insert minimum 2 characters and only a-z.').red)
         end
     end
 
@@ -155,15 +149,11 @@ module Exercise
     # Randomizer for exercise
     def self.random(exercise_list)
         prompt = TTY::Prompt.new
-        if exercise_list.length >= 2
+        exercise_list.shuffle!
+        puts exercise_list.to_table
+        until prompt.yes?("Are you happy with the new order?") == true
             exercise_list.shuffle!
             puts exercise_list.to_table
-            until prompt.yes?("Are you happy with the new order?") == true
-                exercise_list.shuffle!
-                puts exercise_list.to_table
-            end
-        else
-            puts "Not enough exercises to randomise. Please have more than 3."
         end
         puts "It has now been randomised. You will be redirected back to the exercise menu."
     end
@@ -182,9 +172,11 @@ def tables(food_cal_pairing)
     puts Rainbow(table.render(:ascii)).silver
 end
 
+
+Navigation.opening_message
+
 # CRUD for food/calorie.
 def trackers(food_cal_pairing)
-    system("clear")
     tables(food_cal_pairing)
     user_continue = true
     while user_continue == true
@@ -214,15 +206,15 @@ def trackers(food_cal_pairing)
 end
 
 def workouts(exercise_list)
+    p exercise_list
     user_continue = true
     while user_continue
-        system("clear")
-        puts exercise_list.to_table if exercise_list.length >= 1
         Exercise.exercise_menu
         exercise_input = gets.chomp.strip.downcase
         case exercise_input
         when 'add'
             Exercise.add(exercise_list)
+            system "clear"
         when 'delete'
             Exercise.delete(exercise_list)
         when 'random'
