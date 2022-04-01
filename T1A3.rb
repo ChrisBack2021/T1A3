@@ -52,11 +52,21 @@ module Navigation
 end
 
 module Food
+    def self.food_validator
+        TTY::Prompt.new.ask('What did you eat?') do |q|
+            q.validate(/^[a-zA-Z]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
+        end
+    end
+
+    def self.calorie_validator
+        TTY::Prompt.new.ask("How much were the calories?") do |q|
+            q.validate(/^[0-9]+$/, Rainbow('Incorrect characters detected. Please only use numbers 0-9.').red)
+        end
+    end
+
     def self.food_tracker
-        puts Rainbow('What food did you eat?').green
-        foods = gets.chomp.strip
-        puts Rainbow("How many calories was in the #{foods}?").green
-        calories = gets.chomp.strip
+        foods = food_validator
+        calories = calorie_validator
         return foods, calories
     end
 
@@ -113,7 +123,7 @@ module Exercise
 
     def self.character_validator
         TTY::Prompt.new.ask('Which exercise would you like to add?') do |q|
-            q.validate(/(\A\D+\w)\z/, Rainbow('Invalid character detected. Please insert minimum 2 characters and only a-z.').red)
+            q.validate(/^[a-zA-Z]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
         end
     end
 
@@ -184,10 +194,10 @@ end
 
 # CRUD for food/calorie.
 def trackers(food_cal_pairing)
-    system("clear")
     tables(food_cal_pairing)
     user_continue = true
     while user_continue == true
+        tables(food_cal_pairing)
         Food.food_tracker_menu
         # Error handling via input
         user_edits = gets.chomp.strip.downcase
