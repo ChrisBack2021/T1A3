@@ -62,11 +62,16 @@ module Food
         puts Rainbow('If there is nothing to change, please type "exit".').red
     end
 
-    def self.add_food(food_cal_pairing)
-        prompt = TTY::Prompt.new
-        while prompt.yes?("Would you like to add another entry?") == true
+    def self.insert_food(food_cal_pairing)
         food_cal_pairing << Food.food_tracker
         tables(food_cal_pairing)
+    end
+
+    def self.add_food(food_cal_pairing)
+        insert_food(food_cal_pairing)
+        prompt = TTY::Prompt.new
+        while prompt.yes?("Would you like to add another entry?") == true
+        insert_food(food_cal_pairing)
         end
     end
 
