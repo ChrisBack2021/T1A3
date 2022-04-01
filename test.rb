@@ -76,18 +76,19 @@ module Food
         puts Rainbow('If there is nothing to change, please type "exit".').red
     end
 
-    # def self.insert_food(food_cal_pairing)
-    #     if food_cal_pairing.include?(Food.food_tracker)
-    #         puts 'This has already been added.'
-    #     else
-    #         food_cal_pairing << Food.food_tracker
-    #     end
-    # end
+    def self.insert_food(food_cal_pairing)
+        puts Food.food_tracker
+        # if food_cal_pairing.include?(Food.food_tracker)
+        #     puts 'This has already been added.'
+        # else
+        #     food_cal_pairing << Food.food_tracker
+        # end
+    end
 
     def self.add_food(food_cal_pairing)
         prompt = TTY::Prompt.new
-        food_cal_pairing << Food.food_tracker
-        food_cal_pairing << Food.food_tracker while prompt.yes?("Would you like to add another entry?") == true
+        insert_food(food_cal_pairing)
+        insert_food(food_cal_pairing) while prompt.yes?("Would you like to add another entry?") == true
     end
 
     def self.remove_food(food_cal_pairing)
@@ -197,7 +198,6 @@ def tables(food_cal_pairing)
     puts Rainbow(table.render(:ascii)).silver
 end
 
-begin
 # CRUD for food/calorie.
 def trackers(food_cal_pairing)
     system("clear")
@@ -208,7 +208,6 @@ def trackers(food_cal_pairing)
         Food.food_tracker_menu
         # Error handling via input
         user_edits = gets.chomp.strip.downcase
-
         case user_edits
         # Create/read/update
         when 'add'
@@ -230,8 +229,6 @@ def trackers(food_cal_pairing)
         end
     end
 end
-
-
 
 def workouts(exercise_list)
     system("clear")
@@ -258,9 +255,3 @@ def workouts(exercise_list)
 end
 
 Navigation.nav_menu
-
-rescue Interrupt
-    puts 'You have ended the program'
-rescue StandardError
-    puts 'An unexpected error has occured.'
-end
