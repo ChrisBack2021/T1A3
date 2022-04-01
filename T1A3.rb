@@ -29,8 +29,6 @@ module Navigation
         active = true
         while active
 
-        # system("clear")
-
         prompt = TTY::Prompt.new
 
         system("clear")
@@ -80,25 +78,28 @@ module Food
 
     def self.insert_food(food_cal_pairing)
         food_cal_pairing << Food.food_tracker
-        tables(food_cal_pairing)
     end
 
     def self.add_food(food_cal_pairing)
-        insert_food(food_cal_pairing)
         prompt = TTY::Prompt.new
-        insert_food(food_cal_pairing) while prompt.yes?("Would you like to add another entry?") == true
+        insert_food(food_cal_pairing)
+        insert_food(food_cal_pairing) until prompt.yes?("Would you like to add another entry?") == false
     end
 
     def self.remove_food(food_cal_pairing)
         food_cal_pairing.delete_at(food_cal_pairing.length - 1)
         tables(food_cal_pairing)
-        puts "Nothing left to delete" if food_cal_pairing.length.zero?
+        puts Rainbow("Nothing left to delete").red if food_cal_pairing.length.zero?
     end
 
     def self.add_total(food_cal_pairing)
         total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1).even? }
         total_cal.map! { |cal| cal.to_i }
-        p total_cal.sum
+        if food_cal_pairing.empty? == true
+            puts Rainbow("There is nothing in the table.").red
+        else
+            puts Rainbow("The total calories you consumed today is #{total_cal.sum}").blue
+        end
     end
 
     def self.csv(food_cal_pairing)
@@ -147,17 +148,17 @@ module Exercise
         prompt = TTY::Prompt.new
         if exercise_list.length >= 1
             until prompt.yes?("Are you sure you want to remove from the list?") != true
-                    puts 'Please input which you wish to delete.'
-                    puts exercise_list.to_table
-                    delete_item = gets.chomp.strip.downcase
-                    puts Rainbow("#{exercise_list.delete(delete_item)} has now been deleted.").magenta
-                    puts Rainbow("Below is the remaining").magenta if exercise_list.length >= 1
-                    puts exercise_list.to_table if exercise_list.length >= 1
-                    puts "There is nothing to delete!" && return if exercise_list.length.zero? == true
+                puts 'Please input which you wish to delete.'
+                puts exercise_list.to_table
+                delete_item = gets.chomp.strip.downcase
+                puts Rainbow("#{exercise_list.delete(delete_item)} has now been deleted.").magenta
+                puts Rainbow("Below is the remaining").magenta if exercise_list.length >= 1
+                puts exercise_list.to_table if exercise_list.length >= 1
+                puts "There is nothing to delete!" && return if exercise_list.length.zero? == true
             end
         else
             exercise_list.length.zero?
-            puts "There is nothing to delete!"
+            puts Rainbow("There is nothing to delete!").red
             return
         end
     end
@@ -173,7 +174,7 @@ module Exercise
                 puts exercise_list.to_table
             end
         else
-            puts "Not enough exercises to randomise. Please have more than 3."
+            puts Rainbow("Not enough exercises to randomise. Please have more than 2.").red
         end
         puts "It has now been randomised. You will be redirected back to the exercise menu."
     end
@@ -194,6 +195,7 @@ end
 
 # CRUD for food/calorie.
 def trackers(food_cal_pairing)
+    system("clear")
     tables(food_cal_pairing)
     user_continue = true
     while user_continue == true
@@ -218,16 +220,16 @@ def trackers(food_cal_pairing)
             return
         # Error handling
         else
-            puts Rainbow("Invalid choice. Please select from add, remove, csv or exit.").cyan
+            puts Rainbow("Invalid choice. Please select from add, remove, csv or exit.").red
         end
     end
 end
 
 def workouts(exercise_list)
+    system("clear")
+    puts exercise_list.to_table if exercise_list.length >= 1
     user_continue = true
     while user_continue
-        system("clear")
-        puts exercise_list.to_table if exercise_list.length >= 1
         Exercise.exercise_menu
         exercise_input = gets.chomp.strip.downcase
         case exercise_input
