@@ -101,9 +101,9 @@ module Food
         CSV.open('food_tracker.csv', 'a') do |csv|
             food_cal_pairing.each do |row|
             csv << row
+            puts Rainbow('The file has been exported to food_tracker.csv').csv
             end
         end
-        puts 'The file has been exported to food_tracker.csv'
     end
 end
 
@@ -126,7 +126,9 @@ module Exercise
 
     # Exercise tracker add function
     def self.add(exercise_list)
-        puts Rainbow("The list is now full. You cannot add more. Please delete if you wish to add more.").purple if exercise_list.length == 7
+        if exercise_list.length == 7
+            puts Rainbow("The list is now full. You cannot add more. Please delete if you wish to add more.").purple
+        end
         while exercise_list.length < 7 ? exercise_list << exercise_validator : break
             # if exercise_list.include?(validation)
             #     puts "That has already been added."
@@ -143,18 +145,18 @@ module Exercise
     def self.delete(exercise_list)
         prompt = TTY::Prompt.new
         if exercise_list.length >= 1
-            until prompt.yes?("Are you sure you want to remove from the list?") != true
+            until prompt.yes?('Are you sure you want to remove from the list?') != true
                 puts 'Please input which you wish to delete.'
                 puts exercise_list.to_table
                 delete_item = gets.chomp.strip.downcase
                 puts Rainbow("#{exercise_list.delete(delete_item)} has now been deleted.").magenta
-                puts Rainbow("Below is the remaining").magenta if exercise_list.length >= 1
+                puts Rainbow('Below is the remaining').magenta if exercise_list.length >= 1
                 puts exercise_list.to_table if exercise_list.length >= 1
-                puts "There is nothing to delete!" && return if exercise_list.length.zero? == true
+                puts 'There is nothing to delete!' && return if exercise_list.length.zero? == true
             end
         else
             exercise_list.length.zero?
-            puts Rainbow("There is nothing to delete!").red
+            puts Rainbow('There is nothing to delete!').red
             return
         end
     end
@@ -165,14 +167,14 @@ module Exercise
         if exercise_list.length >= 2
             exercise_list.shuffle!
             puts exercise_list.to_table
-            until prompt.yes?("Are you happy with the new order?") == true
+            until prompt.yes?('Are you happy with the new order?') == true
                 exercise_list.shuffle!
                 puts exercise_list.to_table
             end
         else
-            puts Rainbow("Not enough exercises to randomise. Please have more than 2.").red
+            puts Rainbow('Not enough exercises to randomise. Please have more than 2.').red
         end
-        puts "It has now been randomised. You will be redirected back to the exercise menu."
+        puts 'It has now been randomised. You will be redirected back to the exercise menu.'
     end
 
     # File handling
@@ -180,6 +182,7 @@ module Exercise
         file = File.open('exercise_list.txt', 'a')
         file.puts exercise_list
         file.close
+        puts Rainbow('It has been exported to a text-file called exercise_list.txt').yellow
     end
 end
 
@@ -193,7 +196,6 @@ begin
 # CRUD for food/calorie.
 def trackers(food_cal_pairing)
     system("clear")
-    tables(food_cal_pairing)
     user_continue = true
     while user_continue == true
         tables(food_cal_pairing)
