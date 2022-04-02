@@ -1,6 +1,7 @@
 require_relative 'navigation'
 require_relative 'food'
 require_relative 'exercise'
+require_relative 'argv'
 
 
 require 'tty-prompt'
@@ -74,9 +75,48 @@ def workouts(exercise_list)
     end
 end
 
-Navigation.nav_menu
+def argument_vectors
+    Navigation.nav_menu if ARGV.length.zero?
+    case ARGV[0]
+    when '-h'
+        Arg_vectors.help
+    when '-i'
+        Arg_vectors.info
+    when '-g'
+        Arg_vectors.gems
+    end
+end
+
+def multiple_argument_vectors
+    Navigation.nav_menu if ARGV.length.zero?
+    case ARGV[0][1]
+    when '-h -i'
+        Arg_vectors.help
+        Arg_vectors.info
+    when '-h -g'
+        Arg_vectors.help
+        Arg_vectors.gems
+    when '-i -h'
+        Arg_vectors.info
+        Arg_vectors.help
+    when '-i -g'
+        Arg_vectors.info
+        Arg_vectors.gems
+    when '-g -i'
+        Arg_vectors.gems
+        Arg_vectors.info
+    when '-g -h'
+        Arg_vectors.gems
+        Arg_vectors.help
+    end
+end
+
+
+
 rescue Interrupt
     puts 'You have ended the program'
 rescue StandardError
     puts 'An unexpected error has occured.'
 end
+
+argument_vectors
