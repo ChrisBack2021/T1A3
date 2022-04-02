@@ -1,4 +1,4 @@
-require './t1a3.rb'
+require './navigation'
 
 describe Navigation do
     describe '#nav_list' do

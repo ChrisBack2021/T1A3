@@ -1,0 +1,57 @@
+module Food
+    def self.food_validator
+        TTY::Prompt.new.ask('What did you eat?') do |q|
+            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
+        end
+    end
+
+    def self.calorie_validator
+        TTY::Prompt.new.ask("How much were the calories?") do |q|
+            q.validate(/^[0-9]+$/, Rainbow('Incorrect characters detected. Please only use numbers 0-9.').red)
+        end
+    end
+
+    def self.food_tracker
+        foods = food_validator.capitalize
+        calories = calorie_validator
+        return foods, calories
+    end
+
+    def self.food_tracker_menu
+        puts Rainbow('If you would like to add something, please type "add".').green
+        puts Rainbow('To remove the last input, please type "remove".').magenta
+        puts Rainbow('To calculate the total calories, please type "add total".').pink
+        puts Rainbow('If you wish to export the table to a csv, please type "csv".').yellow
+        puts Rainbow('If there is nothing to change, please type "exit".').red
+    end
+
+    def self.add_food(food_cal_pairing)
+        prompt = TTY::Prompt.new
+        food_cal_pairing << food_tracker
+        food_cal_pairing << food_tracker while prompt.yes?("Would you like to add another entry?") == true
+    end
+
+    def self.remove_food(food_cal_pairing)
+        food_cal_pairing.delete_at(food_cal_pairing.length - 1)
+        puts Rainbow("Nothing left to delete").red if food_cal_pairing.length.zero?
+    end
+
+    def self.add_total(food_cal_pairing)
+        total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1).even? }
+        total_cal.map!(&:to_i)
+        if food_cal_pairing.empty? == true
+            puts Rainbow("There is nothing in the table.").red
+        else
+            puts Rainbow("The total calories you consumed today is #{total_cal.sum}").blue
+        end
+    end
+
+    def self.csv(food_cal_pairing)
+        CSV.open('food_tracker.csv', 'a') do |csv|
+            food_cal_pairing.each do |row|
+            csv << row
+            puts Rainbow('The file has been exported to food_tracker.csv').csv
+            end
+        end
+    end
+end

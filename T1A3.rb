@@ -1,3 +1,8 @@
+require_relative 'navigation'
+require_relative 'food'
+require_relative 'exercise'
+
+
 require 'tty-prompt'
 require 'tty-table'
 require 'rainbow'
@@ -5,186 +10,6 @@ require 'tty-font'
 require 'text-table'
 
 require 'csv'
-
-module Navigation
-    def self.opening_message
-        font = TTY::Font.new(:doom)
-        puts font.write("FITNESS    GURU")
-        puts Rainbow('Welcome to the fitness guru app, where we track your dreams for you').aqua
-    end
-
-    # Menu navigation
-    def self.nav_list
-        [
-          '1. Track your food intake and calorie intake',
-          '2. Input your workouts and you can randomize the list of workouts YOU choose.',
-          '3. Exit this program'
-        ]
-    end
-
-    def self.nav_menu
-        food_cal_pairing = []
-        exercise_list = []
-
-        active = true
-        while active
-
-        prompt = TTY::Prompt.new
-
-        system("clear")
-
-        opening_message
-
-        user_selection = prompt.select(Rainbow('Please choose an option from the list').aqua, nav_list)
-
-        case user_selection
-        when "1. Track your food intake and calorie intake"
-            trackers(food_cal_pairing)
-        when "2. Input your workouts and you can randomize the list of workouts YOU choose."
-            workouts(exercise_list)
-        when "3. Exit this program"
-            active = false
-        end
-        end
-    end
-end
-
-module Food
-    def self.food_validator
-        TTY::Prompt.new.ask('What did you eat?') do |q|
-            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
-        end
-    end
-
-    def self.calorie_validator
-        TTY::Prompt.new.ask("How much were the calories?") do |q|
-            q.validate(/^[0-9]+$/, Rainbow('Incorrect characters detected. Please only use numbers 0-9.').red)
-        end
-    end
-
-    def self.food_tracker
-        foods = food_validator.capitalize
-        calories = calorie_validator
-        return foods, calories
-    end
-
-    def self.food_tracker_menu
-        puts Rainbow('If you would like to add something, please type "add".').green
-        puts Rainbow('To remove the last input, please type "remove".').magenta
-        puts Rainbow('To calculate the total calories, please type "add total".').pink
-        puts Rainbow('If you wish to export the table to a csv, please type "csv".').yellow
-        puts Rainbow('If there is nothing to change, please type "exit".').red
-    end
-
-    def self.add_food(food_cal_pairing)
-        prompt = TTY::Prompt.new
-        food_cal_pairing << food_tracker
-        food_cal_pairing << food_tracker while prompt.yes?("Would you like to add another entry?") == true
-    end
-
-    def self.remove_food(food_cal_pairing)
-        food_cal_pairing.delete_at(food_cal_pairing.length - 1)
-        puts Rainbow("Nothing left to delete").red if food_cal_pairing.length.zero?
-    end
-
-    def self.add_total(food_cal_pairing)
-        total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1).even? }
-        total_cal.map!(&:to_i)
-        if food_cal_pairing.empty? == true
-            puts Rainbow("There is nothing in the table.").red
-        else
-            puts Rainbow("The total calories you consumed today is #{total_cal.sum}").blue
-        end
-    end
-
-    def self.csv(food_cal_pairing)
-        CSV.open('food_tracker.csv', 'a') do |csv|
-            food_cal_pairing.each do |row|
-            csv << row
-            puts Rainbow('The file has been exported to food_tracker.csv').csv
-            end
-        end
-    end
-end
-
-module Exercise
-    # Exercise menu
-    def self.exercise_menu
-        puts Rainbow('To add exercises, please type "add". Please note 7 exercises must be enterred.').green
-        puts Rainbow('To delete an exercise, please type "delete".').magenta
-        puts Rainbow('To change the order of the exercises, please type "random".').aliceblue
-        puts Rainbow('To push it out to a text file, please type "text".').yellow
-        puts Rainbow('To exit, please type "exit".').red
-    end
-
-    def self.exercise_validator
-        prompt = TTY::Prompt.new
-        prompt.ask('Which exercise would you like to add?') do |q|
-            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
-        end
-    end
-
-    # Exercise tracker add function
-    def self.add(exercise_list)
-        if exercise_list.length == 7
-            puts Rainbow("The list is now full. You cannot add more. Please delete if you wish to add more.").purple
-        end
-        while exercise_list.length < 7 ? exercise_list << exercise_validator : break
-            # if exercise_list.include?(validation)
-            #     puts "That has already been added."
-            # else
-            #     p "hello"
-            #     exercise_list << validation.call
-            # end
-        end
-        puts exercise_list.to_table
-        puts Rainbow("You have now added 7 exercises.\nPlease choose another option").green
-    end
-
-    # Exercise tracker
-    def self.delete(exercise_list)
-        prompt = TTY::Prompt.new
-        if exercise_list.length >= 1
-            until prompt.yes?('Are you sure you want to remove from the list?') != true
-                puts 'Please input which you wish to delete.'
-                puts exercise_list.to_table
-                delete_item = gets.chomp.strip.downcase
-                puts Rainbow("#{exercise_list.delete(delete_item)} has now been deleted.").magenta
-                puts Rainbow('Below is the remaining').magenta if exercise_list.length >= 1
-                puts exercise_list.to_table if exercise_list.length >= 1
-                puts 'There is nothing to delete!' && return if exercise_list.length.zero? == true
-            end
-        else
-            exercise_list.length.zero?
-            puts Rainbow('There is nothing to delete!').red
-            return
-        end
-    end
-
-    # Randomizer for exercise
-    def self.random(exercise_list)
-        prompt = TTY::Prompt.new
-        if exercise_list.length >= 2
-            exercise_list.shuffle!
-            puts exercise_list.to_table
-            until prompt.yes?('Are you happy with the new order?') == true
-                exercise_list.shuffle!
-                puts exercise_list.to_table
-            end
-        else
-            puts Rainbow('Not enough exercises to randomise. Please have more than 2.').red
-        end
-        puts 'It has now been randomised. You will be redirected back to the exercise menu.'
-    end
-
-    # File handling
-    def self.text(exercise_list)
-        file = File.open('exercise_list.txt', 'a')
-        file.puts exercise_list
-        file.close
-        puts Rainbow('It has been exported to a text-file called exercise_list.txt').yellow
-    end
-end
 
 # Ruby gems for table
 def tables(food_cal_pairing)
@@ -224,8 +49,6 @@ def trackers(food_cal_pairing)
         end
     end
 end
-
-
 
 def workouts(exercise_list)
     system("clear")

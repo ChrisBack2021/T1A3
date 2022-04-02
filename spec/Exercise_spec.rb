@@ -1,4 +1,4 @@
-require './t1a3.rb'
+require './exercise'
 
 describe Exercise do
     describe '#exercise_validator' do

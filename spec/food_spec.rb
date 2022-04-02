@@ -1,4 +1,6 @@
-require './t1a3.rb'
+require './food'
+require 'tty-prompt'
+require 'rainbow'
 
 # To test, choose "3. Exit this Program" in the beginning Navigation menu. This is due to tty-prompt gem interferring with testing
 
