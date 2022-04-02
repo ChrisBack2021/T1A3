@@ -35,7 +35,14 @@ describe Food do
         end
     end
 
-# 
+    describe '#add_food' do
+        it 'makes sure the food_tracker method does not return nil values' do
+            expect([Food.food_tracker]).not_to be_nil
+        end
+        it 'should push the returns for food_tracker into a new array' do
+            expect([Food.food_tracker]).to match_array([%w[Steak 350]])
+        end
+    end
 
 
 
