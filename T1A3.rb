@@ -52,7 +52,7 @@ end
 module Food
     def self.food_validator
         TTY::Prompt.new.ask('What did you eat?') do |q|
-            q.validate(/^[a-zA-Z]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
+            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
         end
     end
 
@@ -63,7 +63,7 @@ module Food
     end
 
     def self.food_tracker
-        foods = food_validator
+        foods = food_validator.capitalize
         calories = calorie_validator
         return foods, calories
     end
@@ -76,23 +76,14 @@ module Food
         puts Rainbow('If there is nothing to change, please type "exit".').red
     end
 
-    # def self.insert_food(food_cal_pairing)
-    #     if food_cal_pairing.include?(Food.food_tracker)
-    #         puts 'This has already been added.'
-    #     else
-    #         food_cal_pairing << Food.food_tracker
-    #     end
-    # end
-
     def self.add_food(food_cal_pairing)
         prompt = TTY::Prompt.new
-        food_cal_pairing << Food.food_tracker
-        food_cal_pairing << Food.food_tracker while prompt.yes?("Would you like to add another entry?") == true
+        food_cal_pairing << food_tracker 
+        food_cal_pairing << food_tracker while prompt.yes?("Would you like to add another entry?") == true
     end
 
     def self.remove_food(food_cal_pairing)
         food_cal_pairing.delete_at(food_cal_pairing.length - 1)
-        # tables(food_cal_pairing)
         puts Rainbow("Nothing left to delete").red if food_cal_pairing.length.zero?
     end
 
@@ -126,9 +117,9 @@ module Exercise
         puts Rainbow('To exit, please type "exit".').red
     end
 
-    def self.character_validator
+    def self.exercise_validator
         TTY::Prompt.new.ask('Which exercise would you like to add?') do |q|
-            q.validate(/^[a-zA-Z]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
+            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
         end
     end
 
@@ -136,7 +127,7 @@ module Exercise
     def self.add(exercise_list)
         puts Rainbow("The list is now full. You cannot add more").purple if exercise_list.length == 7
         while exercise_list.length < 7
-            users_choice = character_validator
+            users_choice = exercise_validator
             if exercise_list.include?(users_choice)
                 puts "That has already been added."
             else

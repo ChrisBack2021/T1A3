@@ -49,7 +49,9 @@ module Navigation
     end
 end
 
-module Food
+class Food
+    attr_accessor :foods, :calories
+
     def self.food_validator
         TTY::Prompt.new.ask('What did you eat?') do |q|
             q.validate(/^[a-zA-Z]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
@@ -76,13 +78,16 @@ module Food
         puts Rainbow('If there is nothing to change, please type "exit".').red
     end
 
+    
+
+
     def self.insert_food(food_cal_pairing)
-        puts Food.food_tracker
-        # if food_cal_pairing.include?(Food.food_tracker)
-        #     puts 'This has already been added.'
-        # else
-        #     food_cal_pairing << Food.food_tracker
-        # end
+        # puts Food.food_tracker
+        if food_cal_pairing.include?(food_tracker)
+            puts 'This has already been added.'
+        else
+            food_cal_pairing << food_tracker
+        end
     end
 
     def self.add_food(food_cal_pairing)
