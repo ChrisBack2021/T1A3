@@ -30,23 +30,17 @@ describe Food do
         it 'does not allow character inputs' do
             expect('Hello world').not_to match(/^[0-9]+$/)
         end
-        it 'should always be greater than 0' do
-            expect(1).to be >= 0
-        end
     end
 
     describe '#add_food' do
-        it 'makes sure the food_tracker method does not return nil values' do
-            expect([Food.food_tracker]).not_to be_nil
-        end
-        it 'should push the returns for food_tracker into a new array' do
-            expect([Food.food_tracker]).to match_array([%w[Steak 350]])
-        end
+         it 'not be empty' do
+             expect([Food.food_tracker]).not_to be_empty
+         end
+         it 'should push the values for food_tracker into a new array' do
+             expect([Food.food_tracker]).to match_array([%w[Steak 350]])
+         end
     end
 
-
-
-
-
+ 
 end
 

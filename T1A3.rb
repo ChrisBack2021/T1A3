@@ -16,9 +16,9 @@ module Navigation
     # Menu navigation
     def self.nav_list
         [
-          "1. Track your food intake and calorie intake",
-          "2. Input your workouts and you can randomize the list of workouts YOU choose.",
-          "3. Exit this program"
+          '1. Track your food intake and calorie intake',
+          '2. Input your workouts and you can randomize the list of workouts YOU choose.',
+          '3. Exit this program'
         ]
     end
 
@@ -35,7 +35,7 @@ module Navigation
 
         opening_message
 
-        user_selection = prompt.select(Rainbow("Please choose an option from the list").aqua, nav_list)
+        user_selection = prompt.select(Rainbow('Please choose an option from the list').aqua, nav_list)
 
         case user_selection
         when "1. Track your food intake and calorie intake"
@@ -78,7 +78,7 @@ module Food
 
     def self.add_food(food_cal_pairing)
         prompt = TTY::Prompt.new
-        food_cal_pairing << food_tracker 
+        food_cal_pairing << food_tracker
         food_cal_pairing << food_tracker while prompt.yes?("Would you like to add another entry?") == true
     end
 
@@ -89,7 +89,7 @@ module Food
 
     def self.add_total(food_cal_pairing)
         total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1).even? }
-        total_cal.map! { |cal| cal.to_i }
+        total_cal.map!(&:to_i)
         if food_cal_pairing.empty? == true
             puts Rainbow("There is nothing in the table.").red
         else
@@ -118,21 +118,22 @@ module Exercise
     end
 
     def self.exercise_validator
-        TTY::Prompt.new.ask('Which exercise would you like to add?') do |q|
+        prompt = TTY::Prompt.new
+        prompt.ask('Which exercise would you like to add?') do |q|
             q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
         end
     end
 
     # Exercise tracker add function
     def self.add(exercise_list)
-        puts Rainbow("The list is now full. You cannot add more").purple if exercise_list.length == 7
-        while exercise_list.length < 7
-            users_choice = exercise_validator
-            if exercise_list.include?(users_choice)
-                puts "That has already been added."
-            else
-                exercise_list << users_choice
-            end
+        puts Rainbow("The list is now full. You cannot add more. Please delete if you wish to add more.").purple if exercise_list.length == 7
+        while exercise_list.length < 7 ? exercise_list << exercise_validator : break
+            # if exercise_list.include?(validation)
+            #     puts "That has already been added."
+            # else
+            #     p "hello"
+            #     exercise_list << validation.call
+            # end
         end
         puts exercise_list.to_table
         puts Rainbow("You have now added 7 exercises.\nPlease choose another option").green
@@ -249,7 +250,6 @@ def workouts(exercise_list)
 end
 
 Navigation.nav_menu
-
 rescue Interrupt
     puts 'You have ended the program'
 rescue StandardError
