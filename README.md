@@ -1,14 +1,21 @@
 # Terminal Application - [Github repo](https://github.com/storm0105/T1A3)
 # Implementation plan - [Trello board](https://trello.com/b/bsGOblk7/terminal-app)
-#
+# Control flow diagram at the planning stage - [Control flow diagram](/docs/control%20flow.png)
+
+##
+
+## System/Hardware requirements
+- System requirements include the Ruby programming language. To download ruby, please visit: [Ruby](https://www.ruby-lang.org/en/downloads/).
+- Also requires user to download bundler for the gems. Please click here for more instructions: [Installation](#installation).
+- This app can be run on any device that can open a terminal.
 
 ## About this app
-Fitness Guru is an app that helps track your fitness goals. It is run through the terminal and takes you to the navigation menu, where there are three options:
+Fitness Guru is an app that helps track your fitness goals. It is run through the terminal and takes **you** to the navigation menu, where there are three options:
 1. Food and calorie tracker
 2. Exercise outputter and randomiser
 3. Exit
 
-Through this app, you will be able to understand track your calories easier and maximise your workouts.
+Through this app, you will be able to track your calories easier and maximise your workouts. For more information about this app, please see [here](#features)
 
 The app was made following the Ruby styling guide. More information about the Ruby styling guide can be found by clicking [here](https://rubystyle.guide/)
 
@@ -26,7 +33,7 @@ The app was made following the Ruby styling guide. More information about the Ru
 - If you are curious about which gems were used for this app, they can be found by typing ```./fitness_guru.sh -g``` and can also be found by clicking [here](#dependancies).
 
 ### Fitness Guru main menu features
-The menu is accessible once you start the app. Inside the main menu, there are three options to choose from:
+The menu is accessible once you start the app. Inside the main menu, you can navigate with your up/down arrow keys and there are three options to choose from:
 1. *Track your food intake and calorie intake.*
    - This takes you to the food intake and calorie menu.
 2. *Input your workouts and you can shuffle the list of workouts YOU choose.*
@@ -70,5 +77,5 @@ Gems have also been used for this app. The gems used for this app are as follows
   
 These can be found in the Gemfile inside the repo. If you followed the instructions in [Installation](#installation), then they will be automatically added to your system. If you wish to download these manually, please find them in [rubygems](https://rubygems.org/).
 
-## System/Hardware requirements
-This app can be run on any device that can open a terminal.
+## Reference
+*The Ruby style Guide*, viewed 3rd April 2022, https://rubystyle.guide/#introduction
