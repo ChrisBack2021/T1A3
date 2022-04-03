@@ -68,7 +68,7 @@ def workouts(exercise_list)
         when 'Exit'
             return
         else
-            puts Rainbow('Invalid choice. Please select from add, delete, shuffle, text or exit.').cyan
+            puts Rainbow('Invalid choice. Please select from add, delete, shuffle, text or exit.').purple
         end
     end
 end
