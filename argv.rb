@@ -1,4 +1,4 @@
-module Arg_vectors
+module ArgVectors
     def self.help
         puts 'Welcome to the Fitness Guru help desk. Please enter "./run_main.sh" to start your new fitness journey'
         puts 'For more information on how Fitness Guru works, please enter "./run_main.sh -i'

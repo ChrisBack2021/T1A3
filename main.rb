@@ -78,17 +78,12 @@ def argument_vectors
     Navigation.nav_menu if ARGV.length.zero?
     case ARGV[0]
     when '-h'
-        Arg_vectors.help
+        ArgVectors.help
     when '-i'
-        Arg_vectors.info
+        ArgVectors.info
     when '-g'
-        Arg_vectors.gems
-    when ARGV[0] == '-h' && ARGV[1] == 'i'
-        Arg_vectors.help
-        Arg_vectors.info
+        ArgVectors.gems
     end
 end
 
 argument_vectors
-
-
