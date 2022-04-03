@@ -6,7 +6,7 @@ module Food
     end
 
     def self.calorie_validator
-        TTY::Prompt.new.ask("How much were the calories?") do |q|
+        TTY::Prompt.new.ask('How much were the calories?') do |q|
             q.validate(/^[0-9]+$/, Rainbow('Incorrect characters detected. Please only use numbers 0-9.').purple)
         end
     end
@@ -18,29 +18,29 @@ module Food
     end
 
     def self.food_tracker_menu
-        puts Rainbow('If you would like to track your food and calories, please type "add".').green
-        puts Rainbow('To remove the last input, please type "remove".').magenta
-        puts Rainbow('To calculate the total calories, please type "add total".').pink
-        puts Rainbow('To export the table to a csv, please type "csv".').yellow
-        puts Rainbow('If there is nothing to change, please type "exit".').red
+        puts Rainbow('If you would like to track your food and calories, please type "Add".').green
+        puts Rainbow('To remove the last input, please type "Remove".').magenta
+        puts Rainbow('To calculate the total calories, please type "Add total".').pink
+        puts Rainbow('To export the table to a csv, please type "Csv".').yellow
+        puts Rainbow('If there is nothing to change, please type "Exit".').red
     end
 
     def self.add_food(food_cal_pairing)
         prompt = TTY::Prompt.new
         food_cal_pairing << food_tracker
-        food_cal_pairing << food_tracker while prompt.yes?("Would you like to add another entry?") == true
+        food_cal_pairing << food_tracker while prompt.yes?('Would you like to add another entry?') == true
     end
 
     def self.remove_food(food_cal_pairing)
         food_cal_pairing.delete_at(food_cal_pairing.length - 1)
-        puts Rainbow("Nothing left to delete").purple if food_cal_pairing.length.zero?
+        puts Rainbow('Nothing left to delete').purple if food_cal_pairing.length.zero?
     end
 
     def self.add_total(food_cal_pairing)
-        total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1).even? }
+        total_cal = food_cal_pairing.flatten.select.with_index { |_, cal| (cal + 1).even? }
         total_cal.map!(&:to_i)
         if food_cal_pairing.empty? == true
-            puts Rainbow("There is nothing in the table.").purple
+            puts Rainbow('There is nothing in the table.').purple
         else
             puts Rainbow("The total calories you consumed today is #{total_cal.sum}").blue
         end

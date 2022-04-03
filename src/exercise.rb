@@ -1,11 +1,10 @@
 module Exercise
-    # Exercise menu
     def self.exercise_menu
-        puts Rainbow('To add exercises, please type "add". Please note you must provide 7 exercises.').green
-        puts Rainbow('To delete an exercise, please type "delete".').magenta
-        puts Rainbow('To change the order of the exercises, please type "shuffle".').aliceblue
-        puts Rainbow('To push it out to a text file, please type "text".').yellow
-        puts Rainbow('To exit, please type "exit".').red
+        puts Rainbow('To add exercises, please type "Add". Please note you must provide 7 exercises.').green
+        puts Rainbow('To delete an exercise, please type "Delete".').magenta
+        puts Rainbow('To change the order of the exercises, please type "Shuffle".').aliceblue
+        puts Rainbow('To push it out to a text file, please type "Text".').yellow
+        puts Rainbow('To exit, please type "Exit".').red
     end
 
     def self.exercise_validator
@@ -15,18 +14,16 @@ module Exercise
         end
     end
 
-    # Exercise tracker add function
     def self.add(exercise_list)
         if exercise_list.length == 7
-            puts Rainbow("The list is now full. You cannot add more.\nPlease delete if you wish to add more.").green
+            puts Rainbow('The list is now full. You cannot add more.\nPlease delete if you wish to add more.').green
         end
         while exercise_list.length < 7 ? exercise_list << exercise_validator : break
         end
         puts exercise_list.to_table
-        puts Rainbow("There are now 7 exercises.\nPlease choose another option").green
+        puts Rainbow('There are now 7 exercises.\nPlease choose another option').green
     end
 
-    # Exercise tracker
     def self.delete(exercise_list)
         prompt = TTY::Prompt.new
         if exercise_list.length >= 1
@@ -46,7 +43,6 @@ module Exercise
         end
     end
 
-    # Randomizer for exercise
     def self.shuffle(exercise_list)
         prompt = TTY::Prompt.new
         if exercise_list.length >= 2
@@ -62,7 +58,6 @@ module Exercise
         puts 'It has now been randomised. You will be redirected back to the exercise menu.'
     end
 
-    # File handling
     def self.text(exercise_list)
         file = File.open('exercise_list.txt', 'a')
         file.puts exercise_list

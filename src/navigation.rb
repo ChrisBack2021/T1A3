@@ -1,7 +1,7 @@
 module Navigation
     def self.opening_message
         font = TTY::Font.new(:doom)
-        puts font.write("FITNESS    GURU")
+        puts font.write('FITNESS    GURU')
         puts Rainbow('Welcome to the fitness guru app, where we track your dreams for you').aqua
     end
 
@@ -23,18 +23,18 @@ module Navigation
 
         prompt = TTY::Prompt.new
 
-        system("clear")
+        system('clear')
 
         opening_message
 
         user_selection = prompt.select(Rainbow('Please choose an option from the list').aqua, nav_list)
 
         case user_selection
-        when "1. Track your food intake and calorie intake."
+        when '1. Track your food intake and calorie intake.'
             trackers(food_cal_pairing)
-        when "2. Input your workouts and you can randomize the list of workouts YOU choose."
+        when '2. Input your workouts and you can randomize the list of workouts YOU choose.'
             workouts(exercise_list)
-        when "3. Exit this program."
+        when '3. Exit this program.'
             return
         end
         end

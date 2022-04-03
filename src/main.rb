@@ -3,7 +3,6 @@ require_relative 'food'
 require_relative 'exercise'
 require_relative 'argv'
 
-
 require 'tty-prompt'
 require 'tty-table'
 require 'rainbow'
@@ -20,7 +19,7 @@ end
 
 # CRUD for food/calorie.
 def trackers(food_cal_pairing)
-    system("clear")
+    system('clear')
     user_continue = true
     while user_continue == true
         tables(food_cal_pairing)
@@ -31,7 +30,7 @@ def trackers(food_cal_pairing)
         # Create/read/update
         when 'add'
             Food.add_food(food_cal_pairing)
-    puts 'You have ended the program'
+            puts 'You have ended the program'
         # read/delete
         when 'remove'
             Food.remove_food(food_cal_pairing)
@@ -45,31 +44,31 @@ def trackers(food_cal_pairing)
             return
         # Error handling
         else
-            puts Rainbow("Invalid choice. Please select from add, remove, csv or exit.").purple
+            puts Rainbow('Invalid choice. Please select from add, remove, csv or exit.').purple
         end
     end
 end
 
 def workouts(exercise_list)
-    system("clear")
+    system('clear')
     puts exercise_list.to_table if exercise_list.length >= 1
     user_continue = true
     while user_continue
         Exercise.exercise_menu
-        exercise_input = gets.chomp.strip.downcase
+        exercise_input = gets.chomp.strip.capitalize
         case exercise_input
-        when 'add'
+        when 'Add'
             Exercise.add(exercise_list)
-        when 'delete'
+        when 'Delete'
             Exercise.delete(exercise_list)
-        when 'shuffle'
+        when 'Shuffle'
             Exercise.shuffle(exercise_list)
-        when 'text'
+        when 'Text'
             Exercise.text(exercise_list)
-        when 'exit'
+        when 'Exit'
             return
         else
-            puts Rainbow("Invalid choice. Please select from add, delete, random, text or exit.").cyan
+            puts Rainbow('Invalid choice. Please select from add, delete, shuffle, text or exit.').cyan
         end
     end
 end
@@ -86,4 +85,11 @@ def argument_vectors
     end
 end
 
+begin
 argument_vectors
+rescue Interrupt
+    puts 'The program has been interrupted.'
+rescue StandardError
+    puts 'An unexpected error has occurred.'
+    retry
+end
