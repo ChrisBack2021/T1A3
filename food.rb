@@ -1,13 +1,13 @@
 module Food
     def self.food_validator
         TTY::Prompt.new.ask('What did you eat?') do |q|
-            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
+            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').purple)
         end
     end
 
     def self.calorie_validator
         TTY::Prompt.new.ask("How much were the calories?") do |q|
-            q.validate(/^[0-9]+$/, Rainbow('Incorrect characters detected. Please only use numbers 0-9.').red)
+            q.validate(/^[0-9]+$/, Rainbow('Incorrect characters detected. Please only use numbers 0-9.').purple)
         end
     end
 
@@ -33,14 +33,14 @@ module Food
 
     def self.remove_food(food_cal_pairing)
         food_cal_pairing.delete_at(food_cal_pairing.length - 1)
-        puts Rainbow("Nothing left to delete").red if food_cal_pairing.length.zero?
+        puts Rainbow("Nothing left to delete").purple if food_cal_pairing.length.zero?
     end
 
     def self.add_total(food_cal_pairing)
         total_cal = food_cal_pairing.flatten.select.with_index { |_, i| (i + 1).even? }
         total_cal.map!(&:to_i)
         if food_cal_pairing.empty? == true
-            puts Rainbow("There is nothing in the table.").red
+            puts Rainbow("There is nothing in the table.").purple
         else
             puts Rainbow("The total calories you consumed today is #{total_cal.sum}").blue
         end
@@ -50,7 +50,7 @@ module Food
         CSV.open('food_tracker.csv', 'a') do |csv|
             food_cal_pairing.each do |row|
             csv << row
-            puts Rainbow('The file has been exported to food_tracker.csv').csv
+            puts Rainbow('The file has been exported to food_tracker.csv')
             end
         end
     end

@@ -4,6 +4,7 @@ module Arg_vectors
         puts 'For more information on how Fitness Guru works, please enter "./run_app.sh -i'
         puts 'If you are interested in the gems that were used to create this wonderful app, please enter "./run_app -g'
     end
+
     def self.info
         puts 'Welcome to the Fitness Guru app! This is the start of a new journey for you!'
         puts 'Fitness Guru allows you to track your food intake and calories in a table.'
@@ -14,6 +15,7 @@ module Arg_vectors
         puts 'If you train for more than 6-8 weeks on the same routine, it diminishes the returns.'
         puts 'I hope te Fitness Guru app helps you on your journey.'
     end
+
     def self.gems
         puts 'Gems used for this miraculous app are "tty-prompt", "tty-table", "rainbow", "tty-font" and "text-table".'
     end

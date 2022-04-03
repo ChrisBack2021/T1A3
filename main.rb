@@ -18,7 +18,6 @@ def tables(food_cal_pairing)
     puts Rainbow(table.render(:ascii)).silver
 end
 
-begin
 # CRUD for food/calorie.
 def trackers(food_cal_pairing)
     system("clear")
@@ -28,11 +27,11 @@ def trackers(food_cal_pairing)
         Food.food_tracker_menu
         # Error handling via input
         user_edits = gets.chomp.strip.downcase
-
         case user_edits
         # Create/read/update
         when 'add'
             Food.add_food(food_cal_pairing)
+    puts 'You have ended the program'
         # read/delete
         when 'remove'
             Food.remove_food(food_cal_pairing)
@@ -46,7 +45,7 @@ def trackers(food_cal_pairing)
             return
         # Error handling
         else
-            puts Rainbow("Invalid choice. Please select from add, remove, csv or exit.").red
+            puts Rainbow("Invalid choice. Please select from add, remove, csv or exit.").purple
         end
     end
 end
@@ -84,39 +83,12 @@ def argument_vectors
         Arg_vectors.info
     when '-g'
         Arg_vectors.gems
+    when ARGV[0] == '-h' && ARGV[1] == 'i'
+        Arg_vectors.help
+        Arg_vectors.info
     end
-end
-
-def multiple_argument_vectors
-    Navigation.nav_menu if ARGV.length.zero?
-    case ARGV[0][1]
-    when '-h -i'
-        Arg_vectors.help
-        Arg_vectors.info
-    when '-h -g'
-        Arg_vectors.help
-        Arg_vectors.gems
-    when '-i -h'
-        Arg_vectors.info
-        Arg_vectors.help
-    when '-i -g'
-        Arg_vectors.info
-        Arg_vectors.gems
-    when '-g -i'
-        Arg_vectors.gems
-        Arg_vectors.info
-    when '-g -h'
-        Arg_vectors.gems
-        Arg_vectors.help
-    end
-end
-
-
-
-rescue Interrupt
-    puts 'You have ended the program'
-rescue StandardError
-    puts 'An unexpected error has occured.'
 end
 
 argument_vectors
+
+

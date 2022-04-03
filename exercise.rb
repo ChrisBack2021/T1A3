@@ -11,25 +11,19 @@ module Exercise
     def self.exercise_validator
         prompt = TTY::Prompt.new
         prompt.ask('Which exercise would you like to add?') do |q|
-            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').red)
+            q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').purple)
         end
     end
 
     # Exercise tracker add function
     def self.add(exercise_list)
         if exercise_list.length == 7
-            puts Rainbow("The list is now full. You cannot add more. Please delete if you wish to add more.").purple
+            puts Rainbow("The list is now full. You cannot add more.\nPlease delete if you wish to add more.").green
         end
         while exercise_list.length < 7 ? exercise_list << exercise_validator : break
-            # if exercise_list.include?(validation)
-            #     puts "That has already been added."
-            # else
-            #     p "hello"
-            #     exercise_list << validation.call
-            # end
         end
         puts exercise_list.to_table
-        puts Rainbow("You have now added 7 exercises.\nPlease choose another option").green
+        puts Rainbow("There are now 7 exercises.\nPlease choose another option").green
     end
 
     # Exercise tracker
@@ -43,11 +37,11 @@ module Exercise
                 puts Rainbow("#{exercise_list.delete(delete_item)} has now been deleted.").magenta
                 puts Rainbow('Below is the remaining').magenta if exercise_list.length >= 1
                 puts exercise_list.to_table if exercise_list.length >= 1
-                puts 'There is nothing to delete!' && return if exercise_list.length.zero? == true
+                return if exercise_list.length.zero? == true
             end
         else
             exercise_list.length.zero?
-            puts Rainbow('There is nothing to delete!').red
+            puts Rainbow('There is nothing to delete!').purple
             return
         end
     end
@@ -63,7 +57,7 @@ module Exercise
                 puts exercise_list.to_table
             end
         else
-            puts Rainbow('Not enough exercises to randomise. Please have more than 2.').red
+            puts Rainbow('Not enough exercises to randomise. Please have more than 2.').purple
         end
         puts 'It has now been randomised. You will be redirected back to the exercise menu.'
     end
