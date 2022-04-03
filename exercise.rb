@@ -18,7 +18,7 @@ module Exercise
     # adds to array
     def self.add(exercise_list)
         if exercise_list.length == 7
-            puts Rainbow('The list is now full. You cannot add more.\nPlease delete if you wish to add more.').green
+            puts Rainbow("The list is now full. You cannot add more.\nPlease delete if you wish to add more.").green
         end
         while exercise_list.length < 7 ? exercise_list << exercise_validator : break
         end

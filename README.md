@@ -1,4 +1,4 @@
-# Terminal Application Github repo - [Github repo](https://github.com/storm0105/T1A3)
+# Terminal Application - [Github repo](https://github.com/storm0105/T1A3)
 
 ## Implementation plan - [Trello board](https://trello.com/b/bsGOblk7/terminal-app)
 ## Control flow diagram at the planning stage - [Control flow diagram](/docs/control%20flow.png)
