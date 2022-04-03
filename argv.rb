@@ -1,8 +1,8 @@
 module Arg_vectors
     def self.help
-        puts 'Welcome to the Fitness Guru help desk. Please enter "./run_app.sh" to start your new fitness journey'
-        puts 'For more information on how Fitness Guru works, please enter "./run_app.sh -i'
-        puts 'If you are interested in the gems that were used to create this wonderful app, please enter "./run_app -g'
+        puts 'Welcome to the Fitness Guru help desk. Please enter "./run_main.sh" to start your new fitness journey'
+        puts 'For more information on how Fitness Guru works, please enter "./run_main.sh -i'
+        puts 'If you are interested in the gems that were used to create this wonderful app, please enter "./run_main -g'
     end
 
     def self.info
