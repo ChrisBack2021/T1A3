@@ -62,8 +62,8 @@ def workouts(exercise_list)
             Exercise.add(exercise_list)
         when 'delete'
             Exercise.delete(exercise_list)
-        when 'random'
-            Exercise.random(exercise_list)
+        when 'shuffle'
+            Exercise.shuffle(exercise_list)
         when 'text'
             Exercise.text(exercise_list)
         when 'exit'
@@ -83,6 +83,8 @@ def argument_vectors
         ArgVectors.info
     when '-g'
         ArgVectors.gems
+    when -'e'
+        trackers(food_cal_pairing)
     end
 end
 

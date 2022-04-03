@@ -14,6 +14,5 @@ gem "tty-font", "~> 0.5.0"
 
 gem "rainbow", "~> 3.1"
 
-gem "tty-box", "~> 0.7.0"
 
 gem "text-table", "~> 1.2"

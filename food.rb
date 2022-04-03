@@ -18,10 +18,10 @@ module Food
     end
 
     def self.food_tracker_menu
-        puts Rainbow('If you would like to add something, please type "add".').green
+        puts Rainbow('If you would like to track your food and calories, please type "add".').green
         puts Rainbow('To remove the last input, please type "remove".').magenta
         puts Rainbow('To calculate the total calories, please type "add total".').pink
-        puts Rainbow('If you wish to export the table to a csv, please type "csv".').yellow
+        puts Rainbow('To export the table to a csv, please type "csv".').yellow
         puts Rainbow('If there is nothing to change, please type "exit".').red
     end
 

@@ -8,9 +8,9 @@ module Navigation
     # Menu navigation
     def self.nav_list
         [
-          '1. Track your food intake and calorie intake',
+          '1. Track your food intake and calorie intake.',
           '2. Input your workouts and you can randomize the list of workouts YOU choose.',
-          '3. Exit this program'
+          '3. Exit this program.'
         ]
     end
 

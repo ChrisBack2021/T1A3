@@ -1,9 +1,9 @@
 module Exercise
     # Exercise menu
     def self.exercise_menu
-        puts Rainbow('To add exercises, please type "add". Please note 7 exercises must be enterred.').green
+        puts Rainbow('To add exercises, please type "add". Please note you must provide 7 exercises.').green
         puts Rainbow('To delete an exercise, please type "delete".').magenta
-        puts Rainbow('To change the order of the exercises, please type "random".').aliceblue
+        puts Rainbow('To change the order of the exercises, please type "shuffle".').aliceblue
         puts Rainbow('To push it out to a text file, please type "text".').yellow
         puts Rainbow('To exit, please type "exit".').red
     end
