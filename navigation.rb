@@ -30,7 +30,7 @@ module Navigation
 
         user_selection = prompt.select(Rainbow('Please choose an option from the list').aqua, nav_list)
 
-        # Nav
+        # Nav_list
         case user_selection
         when '1. Track your food intake and calorie intake.'
             trackers(food_cal_pairing)

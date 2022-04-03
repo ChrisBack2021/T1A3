@@ -2,9 +2,8 @@ require './food'
 require 'tty-prompt'
 require 'rainbow'
 
-# To test, choose "3. Exit this Program" in the beginning Navigation menu. This is due to tty-prompt gem interferring with testing
-
-# For mock tests, all input values are steak and 350 respectively.
+# To test, choose "3. Exit this Program" in the beginning Navigation menu. This is due to tty-prompt gem interferring with rspec
+# For mock tests, all input values are "steak" and "350" respectively.
 describe Food do
     describe '#food_tracker' do
         it 'asks user what food they ate today and how much calories the food was' do

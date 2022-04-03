@@ -1,5 +1,7 @@
 require './exercise'
 
+# To test, choose "3. Exit this Program" in the beginning Navigation menu. This is due to tty-prompt gem interferring with rspe
+# For mock tests, all values are "Steak" and "350" respectively.
 describe Exercise do
     describe '#exercise_validator' do
         it 'does allows characters' do
