@@ -17,7 +17,7 @@ def tables(food_cal_pairing)
     puts Rainbow(table.render(:ascii)).silver
 end
 
-# CRUD for food/calorie.
+# CRUD for food/calorie
 def trackers(food_cal_pairing)
     system('clear')
     user_continue = true

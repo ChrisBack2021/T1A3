@@ -58,13 +58,16 @@ module Exercise
         else
             puts Rainbow('Not enough exercises to randomise. Please have more than 2.').purple
         end
-        puts 'It has now been randomised. You will be redirected back to the exercise menu.'
     end
 
     def self.text(exercise_list)
-        file = File.open('exercise_list.txt', 'a')
-        file.puts exercise_list
-        file.close
-        puts Rainbow('It has been exported to a text-file called exercise_list.txt').yellow
+        if exercise_list.length >= 1            
+            file = File.open('exercise_list.txt', 'a')
+            file.puts exercise_list
+            file.close
+            puts Rainbow('It has been exported to a text-file called exercise_list.txt').yellow
+        else
+            puts Rainbow('There is nothing to export.').purple
+        end
     end
 end

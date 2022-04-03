@@ -51,11 +51,15 @@ module Food
     end
 
     def self.csv(food_cal_pairing)
-        CSV.open('food_tracker.csv', 'a') do |csv|
-            food_cal_pairing.each do |row|
-            csv << row
-            puts Rainbow('The file has been exported to food_tracker.csv')
+        if food_cal_pairing.length >= 1
+            CSV.open('food_tracker.csv', 'a') do |csv|
+                food_cal_pairing.each do |row|
+                csv << row
+                end
             end
+            puts Rainbow('The file has been exported to food_tracker.csv').cyan
+        else
+            puts Rainbow('There is nothing to export.').purple
         end
     end
 end
