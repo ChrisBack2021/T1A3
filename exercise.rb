@@ -61,7 +61,7 @@ module Exercise
     end
 
     def self.text(exercise_list)
-        if exercise_list.length >= 1            
+        if exercise_list.length >= 1
             file = File.open('exercise_list.txt', 'a')
             file.puts exercise_list
             file.close

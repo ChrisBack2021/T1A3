@@ -58,9 +58,6 @@ By selecting this option, you access the exercise menu. All the options for this
 - *text* - Outputs the list of exercises to a text file, which you can take to the gym with you.
 - *exit* - Exits the exercise menu and returns back to the main menu. Once you type exit, the information you typed is saved and not destroyed, thus if you choose to re-enter the exercise menu, the information typed earlier will be displayed back to the user.
 
-## Future features
-Future features include opening CSV and Text files inside the app. Saving files has been implemented, however opening the saved the files once you have exited the app has not been implemented yet.
-
 ## Testing
 The main features for this app were tested using rspec. The tested features are:
 
