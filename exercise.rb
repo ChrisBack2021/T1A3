@@ -18,12 +18,12 @@ module Exercise
     # adds to array
     def self.add(exercise_list)
         if exercise_list.length == 7
-            puts Rainbow("The list is now full. You cannot add more.\nPlease delete if you wish to add more.").green
+            puts Rainbow("The list is now full. You cannot add more. Please delete if you wish to add more.").purple
         end
         while exercise_list.length < 7 ? exercise_list << exercise_validator : break
         end
         puts exercise_list.to_table
-        puts Rainbow('There are now 7 exercises.\nPlease choose another option').green
+        puts Rainbow("There are now 7 exercises. Please choose another option").green
     end
 
     # Delete any array element
