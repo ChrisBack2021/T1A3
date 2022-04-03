@@ -15,6 +15,7 @@ module Navigation
     end
 
     def self.nav_menu
+        # arrays to fill for food/cal and exercise
         food_cal_pairing = []
         exercise_list = []
 
@@ -29,6 +30,7 @@ module Navigation
 
         user_selection = prompt.select(Rainbow('Please choose an option from the list').aqua, nav_list)
 
+        # Nav
         case user_selection
         when '1. Track your food intake and calorie intake.'
             trackers(food_cal_pairing)

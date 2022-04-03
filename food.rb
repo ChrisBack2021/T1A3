@@ -1,10 +1,12 @@
 module Food
+    # Regex validation to only allow letters
     def self.food_validator
         TTY::Prompt.new.ask('What did you eat?') do |q|
             q.validate(/^[a-zA-Z\s]+$/, Rainbow('Incorrect characters detected. Please only use characters a-z').purple)
         end
     end
 
+    # Regex validation to only allow numbers
     def self.calorie_validator
         TTY::Prompt.new.ask('How much were the calories?') do |q|
             q.validate(/^[0-9]+$/, Rainbow('Incorrect characters detected. Please only use numbers 0-9.').purple)
@@ -25,12 +27,14 @@ module Food
         puts Rainbow('If there is nothing to change, please type "Exit".').red
     end
 
+        # add food to table
     def self.add_food(food_cal_pairing)
         prompt = TTY::Prompt.new
         food_cal_pairing << food_tracker
         food_cal_pairing << food_tracker while prompt.yes?('Would you like to add another entry?') == true
     end
 
+    # remove last line of table
     def self.remove_food(food_cal_pairing)
         food_cal_pairing.delete_at(food_cal_pairing.length - 1)
         puts Rainbow('Nothing left to delete').purple if food_cal_pairing.length.zero?

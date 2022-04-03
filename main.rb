@@ -24,31 +24,26 @@ def trackers(food_cal_pairing)
     while user_continue == true
         tables(food_cal_pairing)
         Food.food_tracker_menu
-        # Error handling via input
         user_edits = gets.chomp.strip.downcase
         case user_edits
-        # Create/read/update
         when 'add'
             Food.add_food(food_cal_pairing)
             puts 'You have ended the program'
-        # read/delete
         when 'remove'
             Food.remove_food(food_cal_pairing)
         when 'add total'
             Food.add_total(food_cal_pairing)
-        # File handling
         when 'csv'
             Food.csv(food_cal_pairing)
-        # exit loop, return back to menu
         when 'exit'
             return
-        # Error handling
         else
             puts Rainbow('Invalid choice. Please select from add, remove, csv or exit.').purple
         end
     end
 end
 
+# CRUD for exercise
 def workouts(exercise_list)
     system('clear')
     puts exercise_list.to_table if exercise_list.length >= 1
@@ -73,6 +68,7 @@ def workouts(exercise_list)
     end
 end
 
+# CLI
 def argument_vectors
     Navigation.nav_menu if ARGV.length.zero?
     case ARGV[0]
@@ -85,6 +81,7 @@ def argument_vectors
     end
 end
 
+# Error testing and also start of app
 begin
 argument_vectors
 rescue Interrupt

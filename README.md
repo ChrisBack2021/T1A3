@@ -1,8 +1,8 @@
-# Terminal Application - [Github repo](https://github.com/storm0105/T1A3)
-# Implementation plan - [Trello board](https://trello.com/b/bsGOblk7/terminal-app)
-# Control flow diagram at the planning stage - [Control flow diagram](/docs/control%20flow.png)
+# Terminal Application Github repo - [Github repo](https://github.com/storm0105/T1A3)
 
-##
+## Implementation plan - [Trello board](https://trello.com/b/bsGOblk7/terminal-app)
+## Control flow diagram at the planning stage - [Control flow diagram](/docs/control%20flow.png)
+The implementation plan for this project can be found at the link above. Fitness Guru is large on CRUD which stands for create, read, update, delete and applies it to both its food/calorie tracker and also it's exercise menu. The main features for both are the ability to add things to tables/lists and being able to read what you have chosen to input into them, the ability to delete unwanted things from the tables/lists, and to output them to an external file. The control flow diagram above also shows how the interactions are between each of the functions and for this entire app.
 
 ## System/Hardware requirements
 - System requirements include the Ruby programming language. To download ruby, please visit: [Ruby](https://www.ruby-lang.org/en/downloads/).
@@ -10,7 +10,7 @@
 - This app can be run on any device that can open a terminal.
 
 ## About this app
-Fitness Guru is an app that helps track your fitness goals. It is run through the terminal and takes **you** to the navigation menu, where there are three options:
+Fitness Guru is an app that helps track your fitness goals. It is run through the terminal and takes you to the navigation menu, where there are three options:
 1. Food and calorie tracker
 2. Exercise outputter and randomiser
 3. Exit
@@ -27,10 +27,10 @@ The app was made following the Ruby styling guide. More information about the Ru
 - Enjoy your new Fitness Guru app!
 
 ## Features
-- If you are in the correct directory that Fitness Guru is located, you can start the app by typing ```./fitness_guru.sh```.
-- Fitness guru has a help desk that is available. The help desk is accessible by ```./fitness_guru.sh -h``` and will display the commands available for this app.
-- By typing ```./fitness_guru.sh -i```, information about the app is displayed in the terminal. The information included is what the app does and tracks, and also the reasoning for the randomiser. If you wish to find out more, please type ```./fitness_guru.sh -i``` in your terminal.
-- If you are curious about which gems were used for this app, they can be found by typing ```./fitness_guru.sh -g``` and can also be found by clicking [here](#dependancies).
+- ```./fitness_guru.sh``` - If you are in the correct directory that Fitness Guru is located, you can start the app through this command.
+- ```./fitness_guru.sh -h``` - Fitness guru has a help desk that is available through this command. The help desk shows what commands are available for this app.
+- ```./fitness_guru.sh -i``` - This command displays information about the app in the terminal. The information included is what the app does and tracks, and also the reasoning for the randomiser. If you wish to find out more, please type ```./fitness_guru.sh -i``` in your terminal.
+- ```./fitness_guru.sh -g``` - For those curious about the gem used for this project, this command shows which gems were used. They can also be found by clicking [here](#dependancies).
 
 ### Fitness Guru main menu features
 The menu is accessible once you start the app. Inside the main menu, you can navigate with your up/down arrow keys and there are three options to choose from:
@@ -57,6 +57,16 @@ By selecting this option, you access the exercise menu. All the options for this
 - *shuffle* - Shuffles the exercise list so you do not have to work out in the same order every time.
 - *text* - Outputs the list of exercises to a text file, which you can take to the gym with you.
 - *exit* - Exits the exercise menu and returns back to the main menu. Once you type exit, the information you typed is saved and not destroyed, thus if you choose to re-enter the exercise menu, the information typed earlier will be displayed back to the user.
+
+## Testing
+The main features for this app were tested using rspec. The tested features are:
+
+- *Exercise validator* This is the main core of my exercise array, as everything involved in the workouts function relies heavily on the array. The validator uses regex to make sure only letters can be inputted.
+- *Food tracker* This was tested as the returns for this method is what is enterred into the array, which is the core of my food and calorie tracker method. Without this function, the food and calorie tracker method would break. I used mock tests for this method as it requires two inputs.
+- *Food validator* The food validator uses regex, hence I made sure that the regex was the correct expression in only allowing characters, not symbols or numbers.
+- *Calorie validator* The calorie validator is the same as the food validator, however we are testing only numbers are allowed, not letters or symbols.
+- *Add food* The add food method was also tested to make sure the inputs from the food tracker were outputted correctly.
+- *Nav menu* The nav menu was tested to make certain that it was active and did not return nil. The menu was also tested to make sure that it was correct.
 
 ## Dependancies
 Ruby is needed in order to run this app. If you do not have Ruby installed or wish to read up on this programming language, please visit: [Ruby](https://www.ruby-lang.org/en/downloads/).

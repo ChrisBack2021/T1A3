@@ -7,6 +7,7 @@ module Exercise
         puts Rainbow('To exit, please type "Exit".').red
     end
 
+    # regex to only allow letters
     def self.exercise_validator
         prompt = TTY::Prompt.new
         prompt.ask('Which exercise would you like to add?') do |q|
@@ -14,6 +15,7 @@ module Exercise
         end
     end
 
+    # adds to array
     def self.add(exercise_list)
         if exercise_list.length == 7
             puts Rainbow('The list is now full. You cannot add more.\nPlease delete if you wish to add more.').green
@@ -24,6 +26,7 @@ module Exercise
         puts Rainbow('There are now 7 exercises.\nPlease choose another option').green
     end
 
+    # Delete any array element
     def self.delete(exercise_list)
         prompt = TTY::Prompt.new
         if exercise_list.length >= 1

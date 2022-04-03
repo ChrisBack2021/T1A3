@@ -1,6 +1,6 @@
 require './navigation'
 
-# It tests if 
+# To test, choose "3. Exit this Program" in the beginning Navigation menu. This is due to tty-prompt gem interferring with rspec
 describe Navigation do
     describe '#nav_list' do
         it 'is not empty' do

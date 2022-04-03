@@ -2,7 +2,7 @@ require './food'
 require 'tty-prompt'
 require 'rainbow'
 
-# To test, choose "3. Exit this Program" in the beginning Navigation menu. This is due to tty-prompt gem interferring with testing
+# To test, choose "3. Exit this Program" in the beginning Navigation menu. This is due to tty-prompt gem interferring with rspec
 
 # For mock tests, all input values are steak and 350 respectively.
 describe Food do
