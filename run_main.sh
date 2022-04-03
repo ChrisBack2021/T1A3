@@ -1,3 +1,6 @@
 #!/bin/bash
 
-ruby T1A3.rb $1
+gem install bundler
+bundle install
+clear
+ruby main.rb $1
